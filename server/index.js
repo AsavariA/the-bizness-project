@@ -2,7 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bizRoutes from './routes/biznessRoutes.js';
+import dotenv from 'dotenv'
 
+dotenv.config();
 const app = express();
 
 // Middleware
@@ -12,7 +14,7 @@ app.use(cors());
 app.use('/biznesses', bizRoutes);
 
 // CONNECTING TO DB
-const CONNECTION_URL = 'mongodb+srv://rest_api_user1:123123abc@cluster0.minbu.mongodb.net/the-bizness-project?retryWrites=true&w=majority';
+const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT || 5000;
 
 mongoose
