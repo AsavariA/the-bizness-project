@@ -2,7 +2,7 @@
 export default (biznesses=[], action) => {
     switch (action.type) {
         case 'FETCH_ALL':
-            return biznesses;
+            return action.payload;
         case 'CREATE':
             return biznesses;
         default:

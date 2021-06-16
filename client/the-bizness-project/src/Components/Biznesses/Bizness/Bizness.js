@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Form = () => {
+const Bizness = () => {
     return (
         <div>
-            <h1>Form</h1>
+            <h2>Bizness</h2>
         </div>
     )
 }
 
-export default Form
+export default Bizness
