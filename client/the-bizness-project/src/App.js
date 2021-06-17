@@ -4,7 +4,19 @@ import Form from './Components/Form/Form';
 import Biznesses from './Components/Biznesses/Biznesses'
 import {useDispatch} from 'react-redux';
 import {getBiznesses} from './actions/biznessesAction'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './App.css';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#07134B'
+          },
+        secondary: {
+            main: '#AFF9C9'
+          }
+    }
+  });
 
 const App = () => {
     const dispatch = useDispatch();
@@ -13,14 +25,18 @@ const App = () => {
         dispatch(getBiznesses());
     },[dispatch])
 
+    const styles = {
+        display:'flex', justifyContent: 'space-evenly', margin: '1rem'
+    }
+
     return (
-        <div>
+        <MuiThemeProvider theme={theme}>
             <NavBar />
-            <div style={{display:'flex', justifyContent: 'space-evenly'}}>
+            <div style={styles}>
                 <Biznesses />
                 <Form />
             </div>
-        </div>
+        </MuiThemeProvider>
     )
 }
 
