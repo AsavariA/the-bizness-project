@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import NavBar from './Components/NavBar/NavBar';
 import Form from './Components/Form/Form';
-import Biznesses from './Components/Biznesses/Biznesses'
+// import Biznesses from './Components/Biznesses/Biznesses'
 import {useDispatch} from 'react-redux';
 import {getBiznesses} from './actions/biznessesAction'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -33,7 +33,7 @@ const App = () => {
         <MuiThemeProvider theme={theme}>
             <NavBar />
             <div style={styles}>
-                <Biznesses />
+                {/* <Biznesses /> */}
                 <Form />
             </div>
         </MuiThemeProvider>
