@@ -7,6 +7,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import WorkIcon from '@material-ui/icons/Work';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import HomeIcon from '@material-ui/icons/Home';
 import ReactRoundedImage from "react-rounded-image";
 import Elephant from "../../assets/elephant.jpg";
 import useStyles from './styles';
@@ -47,14 +48,22 @@ const NavBar = () => {
             </Typography>
             <br></br>
             <List>
+                <a href="/" style={{textDecoration:'none', color:'inherit'}}>
+                    <ListItem button key='Home'>
+                        <ListItemIcon><HomeIcon /></ListItemIcon>
+                        <ListItemText primary='Home' />
+                    </ListItem>
+                </a>
                 <ListItem button key='Profile'>
                     <ListItemIcon><AccountCircleIcon /></ListItemIcon>
                     <ListItemText primary='Profile' />
                 </ListItem>
-                <ListItem button key='My Biz'>
-                    <ListItemIcon><WorkIcon /></ListItemIcon>
-                    <ListItemText primary='My Biz' />
-                </ListItem>
+                <a href="/createBizness" style={{textDecoration:'none', color:'inherit'}}>
+                    <ListItem button key='Create Biz'>
+                        <ListItemIcon><WorkIcon /></ListItemIcon>
+                        <ListItemText primary='Create Biz' />
+                    </ListItem>
+                </a>
                 <ListItem button key='Favourites'>
                     <ListItemIcon><FavoriteIcon /></ListItemIcon>
                     <ListItemText primary='Favourites' />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Paper, Button, Typography, Chip, Avatar } from '@material-ui/core';
+import { TextField, Button, Typography, Chip, Avatar } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import useStyles from './styles';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,6 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Form = () => {
     const classes = useStyles();
+
+    const newProduct = { name: '', price: 0, photo: '', };
+
+    const [productData, setProductData] = useState([{ ...newProduct }])
+
+    const [submitText, setSubmitText] = useState('Save')
+    const [obscureAddText, setObscureAddText] = useState(false)
+    const [obscureSubmitText, setObscureSubmitText] = useState(false)
 
     const [biznessData, setBiznessData] = useState({
         owner: '',
@@ -18,24 +26,27 @@ const Form = () => {
         products: [],
     });
 
-    const newProduct = { name: '', price: 0, photo: '', };
-
-    const [productData, setProductData] = useState([{...newProduct}])
-
     const addProduct = () => {
-        setProductData([...productData, {...newProduct}]);
-      };
+        setProductData([...productData, { ...newProduct }]);
+    };
+
+    const handleProductPhotoChange = (idx, data64) => {
+        const updatedProducts = [...productData];
+        updatedProducts[idx]['photo'] = data64;
+        setProductData(updatedProducts);
+    };
 
     const handleProductChange = (e) => {
         const updatedProducts = [...productData];
         updatedProducts[e.target.dataset.idx][e.target.className] = e.target.value;
         setProductData(updatedProducts);
-    };  
+    };
 
     var tagsArray = biznessData.tags.split(',');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(productData);
         setBiznessData({ ...biznessData, products: productData });
         if (biznessData.tags.split(',').length > 5) { toast.error('Only 5 tags are allowed! ') }
         if (biznessData.owner !== '' &&
@@ -44,6 +55,14 @@ const Form = () => {
             biznessData.description !== '' &&
             biznessData.tags !== '') {
             console.log(biznessData);
+            if (submitText === 'Save') {
+                toast('Business Data Saved! Press submit to create business');
+                setSubmitText('Submit');
+                setObscureAddText(true);
+            } else {
+                toast('Business Created!');
+                setObscureSubmitText(true);
+            }
         } else { toast.error('Fill in all the fields! ') }
     }
 
@@ -56,74 +75,83 @@ const Form = () => {
             description: '',
             tags: '',
             logo: '',
+            products: []
         });
+        setProductData([{ name: '', price: 0, photo: '', }]);
+        setObscureAddText(false);
+        setObscureSubmitText(false);
     };
 
+    const inputStyles = {
+        padding: '0.5rem',
+        marginRight: '1rem'
+    }
+
     return (
-        <div style={{ width: '30%' }}>
+        <div style={{ margin: '2rem auto', width: '50vw' }}>
             <ToastContainer />
-            <Paper className={classes.paper}>
-                <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit} >
-                    <Typography variant="h6">Creating Your Business</Typography>
-                    <TextField name="name" variant="outlined" fullWidth label="Name" size="small" value={biznessData.name} required onChange={(e) => setBiznessData({ ...biznessData, name: e.target.value })}></TextField>
-                    <TextField name="description" variant="outlined" fullWidth label="Description" size="small" value={biznessData.description} required onChange={(e) => setBiznessData({ ...biznessData, description: e.target.value })}></TextField>
-                    <TextField name="tags" variant="outlined" fullWidth label="Tags (comma separated)" size="small" value={biznessData.tags} required onChange={(e) => setBiznessData({ ...biznessData, tags: e.target.value })}></TextField>
-                    {tagsArray[0] !== '' ? tagsArray.map((data) => {
+            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit} >
+                <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-evenly' }}>
+                    <div style={{ margin: '0 1rem' }}>
+                        <Avatar alt="Logo" src={biznessData.logo} />
+                    </div>
+                    <Typography variant="h4">CREATE YOUR BUSINESS</Typography>
+                </div>
+                <TextField name="name" variant="outlined" fullWidth label="Name" size="small" value={biznessData.name} required onChange={(e) => setBiznessData({ ...biznessData, name: e.target.value })}></TextField>
+                <TextField name="description" variant="outlined" fullWidth label="Description" size="small" value={biznessData.description} required onChange={(e) => setBiznessData({ ...biznessData, description: e.target.value })}></TextField>
+                <TextField name="tags" variant="outlined" fullWidth label="Tags (comma separated)" size="small" value={biznessData.tags} required onChange={(e) => setBiznessData({ ...biznessData, tags: e.target.value })}></TextField>
+                {tagsArray[0] !== '' ? tagsArray.map((data) => {
+                    return (
+                        <Chip
+                            className={classes.chip}
+                            avatar={<Avatar>{data[0]}</Avatar>}
+                            label={data}
+                            color="secondary"
+                        />
+                    );
+                }) : null}
+                <TextField name="owner" variant="outlined" fullWidth label="Owner" size="small" value={biznessData.owner} required onChange={(e) => setBiznessData({ ...biznessData, owner: e.target.value })}></TextField>
+                <TextField name="contact" variant="outlined" fullWidth label="Contact" size="small" value={biznessData.contact} required onChange={(e) => setBiznessData({ ...biznessData, contact: e.target.value })}></TextField>
+                <div className={classes.fileInput}><FileBase type="file" required multiple={false} onDone={({ base64 }) => setBiznessData({ ...biznessData, logo: base64 })}></FileBase></div>
+
+                {
+                    productData.map((val, idx) => {
+                        const productNameId = `name-${idx}`;
+                        const productPriceId = `price-${idx}`;
                         return (
-                            <Chip
-                                className={classes.chip}
-                                avatar={<Avatar>{data[0]}</Avatar>}
-                                label={data}
-                                color="secondary"
-                            />
+                            <div key={`Product-${idx}`} style={{ width: '100%', height: '100%', margin: '0.5rem auto', backgroundColor: '#DEF2C8', padding: '0.5rem', display: 'flex'}}>
+                                <input
+                                    type="text"
+                                    name={productNameId}
+                                    data-idx={idx}
+                                    id={productNameId}
+                                    className="name"
+                                    placeholder={`Product ${idx + 1}`}
+                                    size="small"
+                                    onChange={handleProductChange}
+                                    style={inputStyles}
+                                />
+                                <input
+                                    type="number"
+                                    name={productPriceId}
+                                    data-idx={idx}
+                                    id={productPriceId}
+                                    className="price"
+                                    placeholder="Price in Rs."
+                                    onChange={handleProductChange}
+                                    style={inputStyles}
+                                />
+                                <div className={classes.fileInput}><FileBase type="file" className="photo" multiple={false} onDone={({ base64 }) => handleProductPhotoChange(idx, base64)}></FileBase></div>
+                                <Avatar alt="Logo" src={productData[idx]['photo']} />
+                            </div>
                         );
-                    }) : null}
-                    <TextField name="owner" variant="outlined" fullWidth label="Owner" size="small" value={biznessData.owner} required onChange={(e) => setBiznessData({ ...biznessData, owner: e.target.value })}></TextField>
-                    <TextField name="contact" variant="outlined" fullWidth label="Contact" size="small" value={biznessData.contact} required onChange={(e) => setBiznessData({ ...biznessData, contact: e.target.value })}></TextField>
-                    <div className={classes.fileInput}><FileBase type="file" required multiple={false} onDone={({ base64 }) => setBiznessData({ ...biznessData, logo: base64 })}></FileBase></div>
+                    })
+                }
 
-                    <Typography variant="h6">Your Products</Typography>
-                    {/* <TextField name="productName" fullWidth variant="outlined" label="Product Name" size="small" required></TextField>
-                    <TextField name="productPrice" variant="outlined" label="Product Price in Rs." size="small" required type="number" fullWidth></TextField>
-                    <div className={classes.fileInput}><FileBase type="file" required multiple={false}></FileBase></div> */}
-
-                    {
-                        productData.map((val, idx) => {
-                            const productNameId = `name-${idx}`;
-                            const productPriceId = `price-${idx}`;
-                            return (
-                                <div key={`Product-${idx}`} style={{width: '100%', height: '100%'}}>
-                                    <input
-                                        type="text"
-                                        name={productNameId}
-                                        data-idx={idx}
-                                        id={productNameId}
-                                        className="name"
-                                        placeholder={`Product ${idx + 1}`}
-                                        size="small"
-                                        onChange={handleProductChange}
-                                    />
-                                    <input
-                                        type="number"
-                                        name={productPriceId}
-                                        data-idx={idx}
-                                        id={productPriceId}
-                                        className="price"
-                                        placeholder="Price in Rs."
-                                        onChange={handleProductChange}
-                                    />
-                                    <div className={classes.fileInput}><FileBase type="file" className="photo" multiple={false} onDone={({ base64 }) => console.log(base64)}></FileBase></div>
-                                </div>
-                            );
-                        })
-                    }
-
-                    <Button color="primary" fullWidth onClick={addProduct}>Add Product</Button>
-                    <Button className={classes.buttonSubmit} color="primary" variant="contained" size="large" type="submit" fullWidth >Submit</Button>
-                    <Button color="secondary" variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
-                </form>
-
-            </Paper>
+                <Button className={classes.buttonSubmit} color="primary" variant="outlined" size="small" onClick={addProduct} fullWidth disabled={obscureAddText}>Add Product</Button>
+                <Button className={classes.buttonSubmit} color="primary" variant="contained" size="large" type="submit" fullWidth disabled={obscureSubmitText}>{submitText}</Button>
+                <Button color="secondary" variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
+            </form>
         </div>
     )
 }
