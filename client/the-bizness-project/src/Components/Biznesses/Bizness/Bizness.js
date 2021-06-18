@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+// import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core';
+// import useStyles from './styles';
 
-const Bizness = () => {
+const Bizness = ({ bizness }) => {
+    // const classes = useStyles();
+
     return (
         <div>
-            <h2>Bizness</h2>
+            Henlo!
         </div>
     )
 }
