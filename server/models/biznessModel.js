@@ -16,6 +16,6 @@ const biznessSchema = mongoose.Schema({
     products: [productSchema],
 })
 
-const BiznessModel = mongoose.model('Bizness', biznessSchema);
+var BiznessModel = mongoose.model('Bizness', biznessSchema);
 
 export default BiznessModel;

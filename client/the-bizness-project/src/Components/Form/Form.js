@@ -4,9 +4,12 @@ import FileBase from 'react-file-base64';
 import useStyles from './styles';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { createBizness } from '../../actions/biznessesAction';
 
 const Form = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const newProduct = { name: '', price: 0, photo: '', };
 
@@ -60,6 +63,7 @@ const Form = () => {
                 setSubmitText('Submit');
                 setObscureAddText(true);
             } else {
+                dispatch(createBizness(biznessData))
                 toast('Business Created!');
                 setObscureSubmitText(true);
             }
