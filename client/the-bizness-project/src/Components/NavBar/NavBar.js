@@ -95,7 +95,7 @@ const NavBar = () => {
                         aria-label="open drawer">
                         <MenuIcon />
                     </IconButton>
-                    <Drawer anchor='left' open={drawerState['left']} onClose={toggleDrawer(false)}>{list('left')}</Drawer>
+                    <Drawer anchor='left' open={drawerState['left']} classes={{ paper: classes.paper }} onClose={toggleDrawer(false)}>{list('left')}</Drawer>
                     <Typography className={classes.title} variant="h6" noWrap>
                         The Bizness Project
                     </Typography>

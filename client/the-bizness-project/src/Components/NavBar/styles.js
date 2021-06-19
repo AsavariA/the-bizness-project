@@ -11,9 +11,15 @@ export default makeStyles((theme) => ({
           marginLeft: theme.spacing(3),
         },
       },
+      drawer: {
+        backgroundColor: 'pink'
+      },
       drawername: {
           display: 'block',
           marginLeft: theme.spacing(3),
+      },
+      paper: {
+        background: 'linear-gradient(225deg, rgba(221,250,231,1) 0%, rgba(247,255,255,1) 100%)'
       },
       search: {
         position: 'relative',
