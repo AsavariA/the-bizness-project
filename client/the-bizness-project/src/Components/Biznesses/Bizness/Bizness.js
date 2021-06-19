@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
@@ -7,6 +7,7 @@ import useStyles from './styles';
 
 const Bizness = ({ bizness }) => {
     const classes = useStyles();
+    const [like, setLike] = useState(false);
 
     return (
         <Card className={classes.root}>
@@ -43,8 +44,8 @@ const Bizness = ({ bizness }) => {
                 }) : null}
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                <IconButton aria-label="add to favorites" onClick={() => { setLike(!like) }} >
+                    <FavoriteIcon style={like ? { color: 'red' }: { color: 'grey' }}/>
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon />

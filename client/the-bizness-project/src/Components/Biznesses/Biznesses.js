@@ -27,7 +27,7 @@ const Biznesses = () => {
                     <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 2fr))', gridGap: '2rem'}}>
                         {
                             biznesses.map((bizness) => (
-                                <Bizness bizness={bizness} />
+                                    <Bizness bizness={bizness} />
                             ))
                         }
                     </div>
