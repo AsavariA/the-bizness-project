@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useState }from 'react'
 import NavBar from './Components/NavBar/NavBar';
 import Form from './Components/Form/Form';
 import Biznesses from './Components/Biznesses/Biznesses'
@@ -21,21 +21,23 @@ const theme = createMuiTheme({
 
 const App = () => {
     const dispatch = useDispatch();
+    const [currentId, setcurrentId] = useState(null);
+    const [formActive, setFormActive] = useState(false)
 
     useEffect(() => {
         dispatch(getBiznesses());
-    }, [dispatch])
+    }, [currentId, dispatch])
 
     return (
         <Router>
             <MuiThemeProvider theme={theme}>
-                <NavBar />
+                <NavBar setFormActive= {setFormActive} />
                 <Switch>
                     <Route exact path="/">
-                        <Biznesses />
-                    </Route>
-                    <Route path="/createBizness">
-                        <Form />
+                        {
+                            formActive ? <Form currentId = {currentId} setcurrentId = {setcurrentId} setFormActive= {setFormActive}/>
+                            : <Biznesses setcurrentId = {setcurrentId} setFormActive= {setFormActive} />
+                        }
                     </Route>
                 </Switch>
             </MuiThemeProvider>

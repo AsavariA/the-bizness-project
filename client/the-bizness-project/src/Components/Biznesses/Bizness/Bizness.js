@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography } from '@material-ui/core';
+import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography,Tooltip } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
 
-const Bizness = ({ bizness }) => {
+const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
     const classes = useStyles();
     const [like, setLike] = useState(false);
 
@@ -16,9 +16,11 @@ const Bizness = ({ bizness }) => {
                     <Avatar alt="Business Logo" src={bizness.logo} />
                 }
                 action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
+                    <Tooltip title="Edit Business">
+                        <IconButton aria-label="settings" onClick={() => {setcurrentId(bizness._id); setFormActive(true)}}>
+                            <MoreVertIcon />
+                        </IconButton>
+                    </Tooltip>
                 }
                 title={bizness.name}
                 subheader={`by ${bizness.owner}`}

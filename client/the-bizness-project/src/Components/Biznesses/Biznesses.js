@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 import Loader from "react-loader-spinner";
 // import useStyles from './styles';
 
-const Biznesses = () => {
+const Biznesses = ({setcurrentId, setFormActive}) => {
     const biznesses = useSelector((state) => state.biznessesReducers);
     // const classes = useStyles();
 
@@ -27,7 +27,7 @@ const Biznesses = () => {
                     <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 2fr))', gridGap: '2rem'}}>
                         {
                             biznesses.map((bizness) => (
-                                    <Bizness bizness={bizness} />
+                                    <Bizness key={bizness._id} bizness={bizness} setcurrentId = {setcurrentId} setFormActive={setFormActive}/>
                             ))
                         }
                     </div>

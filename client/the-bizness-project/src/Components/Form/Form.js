@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Chip, Avatar } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import useStyles from './styles';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
-import { createBizness } from '../../actions/biznessesAction';
+import { createBizness, updateBizness } from '../../actions/biznessesAction';
+import { useSelector } from 'react-redux';
 
-const Form = () => {
+const Form = ({currentId, setcurrentId, setFormActive}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const bizness = useSelector((state) => currentId ? state.biznessesReducers.find((biz) => biz._id === currentId): null);
+
+    useEffect(() => {
+        if(bizness) {
+            setBiznessData(bizness);
+            setProductData(bizness.products);
+        };
+    }, [bizness])
 
     const newProduct = { name: '', price: 0, photo: '', };
 
@@ -59,19 +68,29 @@ const Form = () => {
             biznessData.tags !== '') {
             console.log(biznessData);
             if (submitText === 'Save') {
-                toast('Business Data Saved! Press submit to create business');
+                toast.info('Business Data Saved! Press submit now!');
                 setSubmitText('Submit');
                 setObscureAddText(true);
             } else {
-                dispatch(createBizness(biznessData))
-                toast('Business Created!');
-                setObscureSubmitText(true);
+                if(currentId){
+                    dispatch(updateBizness(currentId, biznessData))
+                    toast.success('Business Updated!');
+                    setObscureSubmitText(true);
+                    setFormActive(false);
+                } else { 
+                    dispatch(createBizness(biznessData))
+                    toast.success('Business Created!');
+                    setObscureSubmitText(true);
+                    setFormActive(false);
+                }
+              clear();  
             }
         } else { toast.error('Fill in all the fields! ') }
     }
 
     const clear = () => {
         console.log('cleared');
+        setcurrentId(null);
         setBiznessData({
             owner: '',
             contact: '',
@@ -99,7 +118,7 @@ const Form = () => {
                     <div style={{ margin: '0 1rem' }}>
                         <Avatar alt="Logo" src={biznessData.logo} />
                     </div>
-                    <Typography variant="h4">CREATE YOUR BUSINESS</Typography>
+                    <Typography variant="h6">{ currentId ? 'EDIT': 'CREATE'} YOUR BUSINESS</Typography>
                 </div>
                 <TextField name="name" variant="outlined" fullWidth label="Name" size="small" value={biznessData.name} required onChange={(e) => setBiznessData({ ...biznessData, name: e.target.value })}></TextField>
                 <TextField name="description" variant="outlined" fullWidth label="Description" size="small" value={biznessData.description} required onChange={(e) => setBiznessData({ ...biznessData, description: e.target.value })}></TextField>
@@ -134,6 +153,7 @@ const Form = () => {
                                     size="small"
                                     onChange={handleProductChange}
                                     style={inputStyles}
+                                    value={productData[idx].name}
                                 />
                                 <input
                                     type="number"
@@ -144,6 +164,7 @@ const Form = () => {
                                     placeholder="Price in Rs."
                                     onChange={handleProductChange}
                                     style={inputStyles}
+                                    value={productData[idx].price}
                                 />
                                 <div className={classes.fileInput}><FileBase type="file" className="photo" multiple={false} onDone={({ base64 }) => handleProductPhotoChange(idx, base64)}></FileBase></div>
                                 <Avatar alt="Logo" src={productData[idx]['photo']} />
@@ -154,7 +175,10 @@ const Form = () => {
 
                 <Button className={classes.buttonSubmit} color="primary" variant="outlined" size="small" onClick={addProduct} fullWidth disabled={obscureAddText}>Add Product</Button>
                 <Button className={classes.buttonSubmit} color="primary" variant="contained" size="large" type="submit" fullWidth disabled={obscureSubmitText}>{submitText}</Button>
-                <Button color="secondary" variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
+                <div style={{display: 'flex', width: '100%'}}>
+                    <Button color="secondary" variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
+                    <Button color="secondary" variant="contained" size="small" fullWidth onClick={()=>setFormActive(false)}>Go Back!</Button>
+                </div>
             </form>
         </div>
     )

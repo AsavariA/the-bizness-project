@@ -1,4 +1,5 @@
 import BiznessModel from "../models/biznessModel.js";
+import mongoose from 'mongoose';
 
 export const getAllBiznesses = async (req, res) => {
     try {
@@ -20,4 +21,15 @@ export const createBizness = async (req, res) => {
         res.status(409).json({message: error.message})
         console.log('Error creating business!'); 
     }
+}
+
+export const updateBizness = async (req, res) => {
+    const { id: _id } = req.params;
+    const bizness = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No business with that id found');
+
+    const updatedBizness = await BiznessModel.findByIdAndUpdate(_id, bizness, {new: true});
+
+    res.json(updatedBizness);
 }

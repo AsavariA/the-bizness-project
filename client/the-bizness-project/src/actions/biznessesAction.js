@@ -18,3 +18,12 @@ export const createBizness = (bizness) => async(dispatch) => {
         console.log(error);
     }
 }
+
+export const updateBizness = (id, bizness) => async(dispatch) => {
+    try {
+        const {data} = await api.updateBizness(id, bizness);
+        dispatch({type: 'UPDATE', payload: data});
+    } catch (error) {
+        console.log(error.message);
+    }
+}

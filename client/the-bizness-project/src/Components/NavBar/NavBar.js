@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import HelpIcon from '@material-ui/icons/Help';
@@ -12,7 +12,7 @@ import ReactRoundedImage from "react-rounded-image";
 import Elephant from "../../assets/elephant.jpg";
 import useStyles from './styles';
 
-const NavBar = () => {
+const NavBar = ({ setFormActive }) => {
     const classes = useStyles();
     const [drawerState, setDrawerState] = React.useState({ left: false });
 
@@ -48,22 +48,18 @@ const NavBar = () => {
             </Typography>
             <br></br>
             <List>
-                <a href="/" style={{textDecoration:'none', color:'inherit'}}>
-                    <ListItem button key='Home'>
-                        <ListItemIcon><HomeIcon /></ListItemIcon>
-                        <ListItemText primary='Home' />
-                    </ListItem>
-                </a>
+                <ListItem button key='Home' onClick={() => setFormActive(false)}>
+                    <ListItemIcon><HomeIcon /></ListItemIcon>
+                    <ListItemText primary='Home' />
+                </ListItem>
                 <ListItem button key='Profile'>
                     <ListItemIcon><AccountCircleIcon /></ListItemIcon>
                     <ListItemText primary='Profile' />
                 </ListItem>
-                <a href="/createBizness" style={{textDecoration:'none', color:'inherit'}}>
-                    <ListItem button key='Create Biz'>
-                        <ListItemIcon><WorkIcon /></ListItemIcon>
-                        <ListItemText primary='Create Biz' />
-                    </ListItem>
-                </a>
+                <ListItem button key='Create Biz' onClick={() => setFormActive(true)}>
+                    <ListItemIcon><WorkIcon /></ListItemIcon>
+                    <ListItemText primary='Create Biz' />
+                </ListItem>
                 <ListItem button key='Favourites'>
                     <ListItemIcon><FavoriteIcon /></ListItemIcon>
                     <ListItemText primary='Favourites' />
