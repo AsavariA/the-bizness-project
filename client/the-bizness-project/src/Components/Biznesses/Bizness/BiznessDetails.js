@@ -54,7 +54,7 @@ const BiznessDetails = ({ biznesses }) => {
     return (
         <div>
             {!bizness
-                ? <div style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                ? <div style={{ height: '80vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Loader
                         type="ThreeDots"
                         color="#07134B"
