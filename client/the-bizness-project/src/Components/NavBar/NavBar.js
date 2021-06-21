@@ -43,7 +43,7 @@ const NavBar = ({ setFormActive }) => {
             <Typography className={classes.drawername} variant="h6" noWrap>
                 Guest
             </Typography>
-            <Typography className={classes.drawername} variant="h8" noWrap>
+            <Typography className={classes.drawername} variant="body1" noWrap>
                 guest@email.com
             </Typography>
             <br></br>

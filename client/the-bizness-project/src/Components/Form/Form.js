@@ -7,11 +7,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { createBizness, updateBizness } from '../../actions/biznessesAction';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive'
 
 const Form = ({currentId, setcurrentId, setFormActive}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const bizness = useSelector((state) => currentId ? state.biznessesReducers.find((biz) => biz._id === currentId): null);
+    const isResponsive = useMediaQuery({ query: '(max-width: 900px)' })
 
     useEffect(() => {
         if(bizness) {
@@ -20,7 +22,7 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
         };
     }, [bizness])
 
-    const newProduct = { name: '', price: 0, photo: '', };
+    const newProduct = { name: '', price: '', photo: '', };
 
     const [productData, setProductData] = useState([{ ...newProduct }])
 
@@ -100,18 +102,19 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
             logo: '',
             products: []
         });
-        setProductData([{ name: '', price: 0, photo: '', }]);
+        setProductData([{ name: '', price: '', photo: '', }]);
         setObscureAddText(false);
         setObscureSubmitText(false);
     };
 
     const inputStyles = {
         padding: '0.5rem',
-        marginRight: '1rem'
+        marginRight: isResponsive ? '0' : '1rem',
+        marginBottom: isResponsive ? '0.5rem' : '0'
     }
 
     return (
-        <div style={{ margin: '2rem auto', width: '50vw' }}>
+        <div style={{ margin: '2rem auto', width: isResponsive ? '90vw' : '50vw' }}>
             <ToastContainer />
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit} >
                 <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-evenly' }}>
@@ -142,7 +145,7 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
                         const productNameId = `name-${idx}`;
                         const productPriceId = `price-${idx}`;
                         return (
-                            <div key={`Product-${idx}`} style={{ width: '100%', height: '100%', margin: '0.5rem auto', backgroundColor: '#DEF2C8', padding: '0.5rem', display: 'flex'}}>
+                            <div key={`Product-${idx}`} style={{ width: '100%', height: '100%', margin: '0.5rem auto', backgroundColor: '#DEF2C8', padding: '0.5rem', display: 'flex', flexDirection: isResponsive ? 'column' : 'row'}}>
                                 <input
                                     type="text"
                                     name={productNameId}
@@ -167,7 +170,7 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
                                     value={productData[idx].price}
                                 />
                                 <div className={classes.fileInput}><FileBase type="file" className="photo" multiple={false} onDone={({ base64 }) => handleProductPhotoChange(idx, base64)}></FileBase></div>
-                                <Avatar alt="Logo" src={productData[idx]['photo']} />
+                                {isResponsive ? null : <Avatar alt="Logo" src={productData[idx]['photo']} />}
                             </div>
                         );
                     })

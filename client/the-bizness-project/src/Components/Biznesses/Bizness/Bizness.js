@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography,Tooltip } from '@material-ui/core';
+import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography, Tooltip } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
 import useStyles from './styles';
 
 const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
@@ -16,8 +17,8 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                     <Avatar alt="Business Logo" src={bizness.logo} />
                 }
                 action={
-                    <Tooltip title="Edit Business">
-                        <IconButton aria-label="settings" onClick={() => {setcurrentId(bizness._id); setFormActive(true)}}>
+                    <Tooltip title="View More">
+                        <IconButton aria-label="settings">
                             <MoreVertIcon />
                         </IconButton>
                     </Tooltip>
@@ -36,6 +37,7 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                 {bizness.tags[0] !== '' ? bizness.tags.split(',').map((data) => {
                     return (
                         <Chip
+                            key={data}
                             size="small"
                             className={classes.chip}
                             avatar={<Avatar>{data[0]}</Avatar>}
@@ -46,12 +48,21 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                 }) : null}
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" onClick={() => { setLike(!like) }} >
-                    <FavoriteIcon style={like ? { color: 'red' }: { color: 'grey' }}/>
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
+                <Tooltip title="Edit Business">
+                    <IconButton aria-label="edit" onClick={() => { setcurrentId(bizness._id); setFormActive(true) }}>
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Add to Favourites">
+                    <IconButton aria-label="add to favorites" onClick={() => { setLike(!like) }} >
+                        <FavoriteIcon style={like ? { color: 'red' } : { color: 'grey' }} />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Share">
+                    <IconButton aria-label="share">
+                        <ShareIcon />
+                    </IconButton>
+                </Tooltip>
             </CardActions>
         </Card>
     )

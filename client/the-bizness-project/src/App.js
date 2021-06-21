@@ -8,6 +8,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+const font =  "'Nunito', sans-serif";
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -16,6 +17,9 @@ const theme = createMuiTheme({
         secondary: {
             main: '#AFF9C9'
         }
+    },
+    typography: {
+        fontFamily: font,
     }
 });
 

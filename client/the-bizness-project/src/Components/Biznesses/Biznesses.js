@@ -27,7 +27,9 @@ const Biznesses = ({setcurrentId, setFormActive}) => {
                     <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 2fr))', gridGap: '2rem'}}>
                         {
                             biznesses.map((bizness) => (
-                                    <Bizness key={bizness._id} bizness={bizness} setcurrentId = {setcurrentId} setFormActive={setFormActive}/>
+                                <div key={bizness._id}>
+                                    <Bizness bizness={bizness} setcurrentId = {setcurrentId} setFormActive={setFormActive}/>
+                                </div>
                             ))
                         }
                     </div>
