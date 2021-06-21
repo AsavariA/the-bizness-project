@@ -1,4 +1,4 @@
-import React, { useEffect , useState }from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from './Components/NavBar/NavBar';
 import Form from './Components/Form/Form';
 import Biznesses from './Components/Biznesses/Biznesses'
@@ -7,8 +7,9 @@ import { getBiznesses } from './actions/biznessesAction'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Footer from './Components/Footer/Footer';
 
-const font =  "'Nunito', sans-serif";
+const font = "'Nunito', sans-serif";
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -35,15 +36,18 @@ const App = () => {
     return (
         <Router>
             <MuiThemeProvider theme={theme}>
-                <NavBar setFormActive= {setFormActive} />
-                <Switch>
-                    <Route exact path="/">
-                        {
-                            formActive ? <Form currentId = {currentId} setcurrentId = {setcurrentId} setFormActive= {setFormActive}/>
-                            : <Biznesses setcurrentId = {setcurrentId} setFormActive= {setFormActive} />
-                        }
-                    </Route>
-                </Switch>
+                <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+                    <NavBar setFormActive={setFormActive} />
+                    <Switch>
+                        <Route exact path="/">
+                            {
+                                formActive ? <Form currentId={currentId} setcurrentId={setcurrentId} setFormActive={setFormActive} />
+                                    : <Biznesses setcurrentId={setcurrentId} setFormActive={setFormActive} />
+                            }
+                        </Route>
+                    </Switch>
+                    <Footer />
+                </div>
             </MuiThemeProvider>
         </Router>
     )
