@@ -8,6 +8,8 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Footer from './Components/Footer/Footer';
+import { useSelector } from 'react-redux';
+import BiznessDetails from './Components/Biznesses/Bizness/BiznessDetails';
 
 const font = "'Nunito', sans-serif";
 const theme = createMuiTheme({
@@ -27,7 +29,8 @@ const theme = createMuiTheme({
 const App = () => {
     const dispatch = useDispatch();
     const [currentId, setcurrentId] = useState(null);
-    const [formActive, setFormActive] = useState(false)
+    const [formActive, setFormActive] = useState(false);
+    const biznesses = useSelector((state) => state.biznessesReducers);
 
     useEffect(() => {
         dispatch(getBiznesses());
@@ -36,14 +39,17 @@ const App = () => {
     return (
         <Router>
             <MuiThemeProvider theme={theme}>
-                <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+                <div style={{display: 'flex', flexDirection: 'column'}}>
                     <NavBar setFormActive={setFormActive} />
                     <Switch>
                         <Route exact path="/">
                             {
                                 formActive ? <Form currentId={currentId} setcurrentId={setcurrentId} setFormActive={setFormActive} />
-                                    : <Biznesses setcurrentId={setcurrentId} setFormActive={setFormActive} />
+                                    : <Biznesses setcurrentId={setcurrentId} setFormActive={setFormActive} biznesses={biznesses}/>
                             }
+                        </Route>
+                        <Route exact path="/:id">
+                            <BiznessDetails biznesses={biznesses}/>
                         </Route>
                     </Switch>
                     <Footer />

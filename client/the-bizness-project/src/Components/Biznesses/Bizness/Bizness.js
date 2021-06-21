@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography, Tooltip } from '@material-ui/core';
+import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography, Tooltip, Link } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -18,9 +18,11 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                 }
                 action={
                     <Tooltip title="View More">
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
+                        <Link href={`/${bizness._id}`}>
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon />
+                            </IconButton>
+                        </Link>
                     </Tooltip>
                 }
                 title={bizness.name}

@@ -1,12 +1,12 @@
 import React from 'react';
 import Bizness from './Bizness/Bizness';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import Loader from "react-loader-spinner";
 // import useStyles from './styles';
 
-const Biznesses = ({setcurrentId, setFormActive}) => {
-    const biznesses = useSelector((state) => state.biznessesReducers);
+const Biznesses = ({setcurrentId, setFormActive, biznesses}) => {
+    // const biznesses = useSelector((state) => state.biznessesReducers);
     // const classes = useStyles();
 
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Link, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import HelpIcon from '@material-ui/icons/Help';
@@ -48,10 +48,12 @@ const NavBar = ({ setFormActive }) => {
             </Typography>
             <br></br>
             <List>
-                <ListItem button key='Home' onClick={() => setFormActive(false)}>
-                    <ListItemIcon><HomeIcon /></ListItemIcon>
-                    <ListItemText primary='Home' />
-                </ListItem>
+                <Link href='/'>
+                    <ListItem button key='Home' onClick={() => setFormActive(false)}>
+                        <ListItemIcon><HomeIcon /></ListItemIcon>
+                        <ListItemText primary='Home' />
+                    </ListItem>
+                </Link>
                 <ListItem button key='Profile'>
                     <ListItemIcon><AccountCircleIcon /></ListItemIcon>
                     <ListItemText primary='Profile' />
