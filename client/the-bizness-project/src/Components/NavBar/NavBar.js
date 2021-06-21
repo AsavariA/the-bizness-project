@@ -58,10 +58,12 @@ const NavBar = ({ setFormActive }) => {
                     <ListItemIcon><AccountCircleIcon /></ListItemIcon>
                     <ListItemText primary='Profile' />
                 </ListItem>
-                <ListItem button key='Create Biz' onClick={() => setFormActive(true)}>
-                    <ListItemIcon><WorkIcon /></ListItemIcon>
-                    <ListItemText primary='Create Biz' />
-                </ListItem>
+                <Link href='/createBizness'>
+                    <ListItem button key='Create Biz' onClick={() => setFormActive(true)}>
+                        <ListItemIcon><WorkIcon /></ListItemIcon>
+                        <ListItemText primary='Create Biz' />
+                    </ListItem>
+                </Link>
                 <ListItem button key='Favourites'>
                     <ListItemIcon><FavoriteIcon /></ListItemIcon>
                     <ListItemText primary='Favourites' />

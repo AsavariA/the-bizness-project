@@ -48,6 +48,9 @@ const App = () => {
                                     : <Biznesses setcurrentId={setcurrentId} setFormActive={setFormActive} biznesses={biznesses}/>
                             }
                         </Route>
+                        <Route exact path="/createBizness">
+                            <Form currentId={null} setcurrentId={setcurrentId} setFormActive={setFormActive} />
+                        </Route>
                         <Route exact path="/:id">
                             <BiznessDetails biznesses={biznesses}/>
                         </Route>
