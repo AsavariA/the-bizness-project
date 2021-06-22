@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography, Tooltip, Link } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
 import useStyles from './styles';
+import {useDispatch} from 'react-redux';
+import {deleteBizness} from '../../../actions/biznessesAction'
 
 const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [like, setLike] = useState(false);
 
     return (
@@ -60,9 +63,9 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                         <FavoriteIcon style={like ? { color: 'red' } : { color: 'grey' }} />
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="Share">
-                    <IconButton aria-label="share">
-                        <ShareIcon />
+                <Tooltip title="Delete">
+                    <IconButton aria-label="delete" onClick={() => dispatch(deleteBizness(bizness._id))}>
+                        <DeleteIcon />
                     </IconButton>
                 </Tooltip>
             </CardActions>

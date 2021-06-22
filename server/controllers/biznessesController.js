@@ -33,3 +33,13 @@ export const updateBizness = async (req, res) => {
 
     res.json(updatedBizness);
 }
+
+export const deleteBizness = async (req, res) => {
+    const {id: _id} = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No business with that id found');
+
+    await BiznessModel.findByIdAndRemove(_id); 
+
+    res.json({message: 'Post Deleted Succesfully'})
+}

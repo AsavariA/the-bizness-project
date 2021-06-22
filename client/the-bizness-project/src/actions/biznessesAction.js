@@ -27,3 +27,12 @@ export const updateBizness = (id, bizness) => async(dispatch) => {
         console.log(error.message);
     }
 }
+
+export const deleteBizness = (id) => async (dispatch) => {
+    try {
+        await api.deleteBizness(id)
+        dispatch({type: 'DELETE', payload:id})
+    } catch (error) {
+        console.log(error)
+    }
+}

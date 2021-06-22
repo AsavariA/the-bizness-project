@@ -9,14 +9,14 @@ import { createBizness, updateBizness } from '../../actions/biznessesAction';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive'
 
-const Form = ({currentId, setcurrentId, setFormActive}) => {
+const Form = ({ currentId, setcurrentId, setFormActive }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const bizness = useSelector((state) => currentId ? state.biznessesReducers.find((biz) => biz._id === currentId): null);
+    const bizness = useSelector((state) => currentId ? state.biznessesReducers.find((biz) => biz._id === currentId) : null);
     const isResponsive = useMediaQuery({ query: '(max-width: 900px)' })
 
     useEffect(() => {
-        if(bizness) {
+        if (bizness) {
             setBiznessData(bizness);
             setProductData(bizness.products);
         };
@@ -62,8 +62,8 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
         e.preventDefault();
         console.log(productData);
         setBiznessData({ ...biznessData, products: productData });
-        if (biznessData.tags.split(',').length > 5) { toast.error('Only 5 tags are allowed! ') }
-        if (biznessData.owner !== '' &&
+        if (biznessData.tags.split(',').length <= 5 &&
+            biznessData.owner !== '' &&
             biznessData.contact !== '' &&
             biznessData.name !== '' &&
             biznessData.description !== '' &&
@@ -74,20 +74,20 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
                 setSubmitText('Submit');
                 setObscureAddText(true);
             } else {
-                if(currentId){
+                if (currentId) {
                     dispatch(updateBizness(currentId, biznessData))
                     toast.success('Business Updated!');
                     setObscureSubmitText(true);
                     setFormActive(false);
-                } else { 
+                } else {
                     dispatch(createBizness(biznessData))
                     toast.success('Business Created!');
                     setObscureSubmitText(true);
                     setFormActive(false);
                 }
-              clear();  
+                clear();
             }
-        } else { toast.error('Fill in all the fields! ') }
+        } else { toast.error('Fill in all the fields! Create only upto 5 tags!') }
     }
 
     const clear = () => {
@@ -121,7 +121,7 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
                     <div style={{ margin: '0 1rem' }}>
                         <Avatar alt="Logo" src={biznessData.logo} />
                     </div>
-                    <Typography variant="h6">{ currentId ? 'EDIT': 'CREATE'} YOUR BUSINESS</Typography>
+                    <Typography variant="h6">{currentId ? 'EDIT' : 'CREATE'} YOUR BUSINESS</Typography>
                 </div>
                 <TextField name="name" variant="outlined" fullWidth label="Name" size="small" value={biznessData.name} required onChange={(e) => setBiznessData({ ...biznessData, name: e.target.value })}></TextField>
                 <TextField name="description" variant="outlined" fullWidth label="Description" size="small" value={biznessData.description} required onChange={(e) => setBiznessData({ ...biznessData, description: e.target.value })}></TextField>
@@ -145,7 +145,7 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
                         const productNameId = `name-${idx}`;
                         const productPriceId = `price-${idx}`;
                         return (
-                            <div key={`Product-${idx}`} style={{ width: '100%', height: '100%', margin: '0.5rem auto', backgroundColor: '#DEF2C8', padding: '0.5rem', display: 'flex', flexDirection: isResponsive ? 'column' : 'row'}}>
+                            <div key={`Product-${idx}`} style={{ width: '100%', height: '100%', margin: '0.5rem auto', backgroundColor: '#DEF2C8', padding: '0.5rem', display: 'flex', flexDirection: isResponsive ? 'column' : 'row' }}>
                                 <input
                                     type="text"
                                     name={productNameId}
@@ -178,9 +178,9 @@ const Form = ({currentId, setcurrentId, setFormActive}) => {
 
                 <Button className={classes.buttonSubmit} color="primary" variant="outlined" size="small" onClick={addProduct} fullWidth disabled={obscureAddText}>Add Product</Button>
                 <Button className={classes.buttonSubmit} color="primary" variant="contained" size="large" type="submit" fullWidth disabled={obscureSubmitText}>{submitText}</Button>
-                <div style={{display: 'flex', width: '100%'}}>
+                <div style={{ display: 'flex', width: '100%' }}>
                     <Button color="secondary" variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
-                    <Button color="secondary" variant="contained" size="small" fullWidth onClick={()=>setFormActive(false)}>Go Back!</Button>
+                    <Button color="secondary" variant="contained" size="small" fullWidth onClick={() => setFormActive(false)}>Go Back!</Button>
                 </div>
             </form>
         </div>
