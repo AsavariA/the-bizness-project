@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     const footerStyles = {
-        background: '#f1f1f1',
+        backgroundColor: '#00002f',
         bottom: '0',
         width: '100%',
         height: '5rem',
@@ -13,7 +13,7 @@ const Footer = () => {
 
     return (
         <div style={footerStyles}>
-            <h4 style={{ textAlign: 'center', fontWeight: 'lighter' }}>Asavari Ambavane | The Bizness Project</h4>
+            <h4 style={{ textAlign: 'center', fontWeight: 'lighter', color:'white' }}>Asavari Ambavane | The Bizness Project</h4>
         </div>
     )
 }

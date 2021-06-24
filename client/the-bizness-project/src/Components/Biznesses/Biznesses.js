@@ -10,7 +10,7 @@ const Biznesses = ({setcurrentId, setFormActive, biznesses}) => {
     // const classes = useStyles();
 
     return (
-        <div className='buzinesses' style={{ padding: '1rem 2rem', marginBottom: '1rem' }}>
+        <div className='buzinesses' style={{ padding: '1rem 2rem', marginBottom: '2rem' }}>
             <div style={{ textAlign: 'center', margin: '1rem 0' }}>
                 <Typography variant='h4'>Biznesses</Typography>
             </div>

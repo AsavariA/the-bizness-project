@@ -40,7 +40,8 @@ const BiznessDetails = ({ biznesses }) => {
         padding: isResponsive ? '3rem 1rem' : '3rem 2rem',
         alignItems: 'center',
         justifyContent: 'center',
-        placeItems: 'center'
+        placeItems: 'center',
+        backgroundColor: 'white'
     }
 
     const bottomStyles = {

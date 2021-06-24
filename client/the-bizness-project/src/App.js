@@ -40,7 +40,7 @@ const App = () => {
     return (
         <Router>
             <MuiThemeProvider theme={theme}>
-                <div style={{display: 'flex', flexDirection: 'column'}}>
+                <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'aliceblue'}}>
                     <NavBar setFormActive={setFormActive} />
                     <Switch>
                         <Route exact path="/">
