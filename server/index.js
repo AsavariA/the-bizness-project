@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bizRoutes from './routes/biznessRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import dotenv from 'dotenv'
 
 dotenv.config();
@@ -12,6 +13,7 @@ app.use(express.json({limit: "30mb", extended: true}));
 app.use(express.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 app.use('/biznesses', bizRoutes);
+app.use('/users', userRoutes)
 
 // CONNECTING TO DB
 const CONNECTION_URL = process.env.CONNECTION_URL;
