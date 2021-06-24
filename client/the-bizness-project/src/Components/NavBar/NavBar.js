@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState, useEffect} from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button, InputBase, Drawer, List, Link, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -13,11 +13,28 @@ import ReactRoundedImage from "react-rounded-image";
 import Userimage from "../../assets/userimage.jpg";
 import Noimage from "../../assets/noimage.jpg";
 import useStyles from './styles';
+import {useDispatch} from 'react-redux';
+import {useHistory, useLocation} from 'react-router-dom';
 
 const NavBar = ({ setFormActive }) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
     const [drawerState, setDrawerState] = React.useState({ left: false });
-    const user = null;
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+
+    useEffect(() => {
+        const token = user?.token
+        setUser(JSON.parse(localStorage.getItem('profile')))
+        // eslint-disable-next-line
+    }, [location])
+
+    const logout = () => {
+        dispatch({type: 'LOGOUT'})
+        history.push('/')
+        setUser(null)
+    }
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -44,10 +61,10 @@ const NavBar = ({ setFormActive }) => {
                 />
             </div>
             <Typography className={classes.drawername} variant="h6" noWrap>
-                {user ? 'User Name' : 'Guest'}
+                {user ? `${user?.result.name}` : 'Guest'}
             </Typography>
             <Typography className={classes.drawername} variant="body1" noWrap>
-                {user ? 'user@email.com' : 'guest@email.com'}
+                {user ? `${user?.result.email}` : 'guest@email.com'}
             </Typography>
             <br></br>
             <List>
@@ -72,7 +89,7 @@ const NavBar = ({ setFormActive }) => {
                     <ListItemText primary='Favourites' />
                 </ListItem>
                 {user ? (
-                    <ListItem button key='Logout'>
+                    <ListItem button key='Logout' onClick={logout}>
                         <ListItemIcon><VpnKeyIcon /></ListItemIcon>
                         <ListItemText primary='Logout' />
                     </ListItem>
@@ -134,7 +151,7 @@ const NavBar = ({ setFormActive }) => {
                     <div>
                         {
                             user ? (
-                                <Button className={classes.button} variant="contained" color="secondary">
+                                <Button className={classes.button} variant="contained" color="secondary" onClick={logout}>
                                     Logout
                                 </Button>
                             ) : (
