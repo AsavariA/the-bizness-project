@@ -6,13 +6,17 @@ export default makeStyles((theme) => ({
       },
       title: {
         display: 'none',
+        color: 'white',
         [theme.breakpoints.up('sm')]: {
           display: 'block',
           marginLeft: theme.spacing(3),
         },
       },
-      drawer: {
-        backgroundColor: 'pink'
+      button: {
+        display: 'none',
+        [theme.breakpoints.up('sm')]: {
+          display: 'block',
+        },
       },
       drawername: {
           display: 'block',

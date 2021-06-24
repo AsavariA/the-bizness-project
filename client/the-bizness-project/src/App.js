@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Footer from './Components/Footer/Footer';
 import { useSelector } from 'react-redux';
 import BiznessDetails from './Components/Biznesses/Bizness/BiznessDetails';
+import Auth from './Components/Auth/Auth'
 
 const font = "'Nunito', sans-serif";
 const theme = createMuiTheme({
@@ -50,6 +51,9 @@ const App = () => {
                         </Route>
                         <Route exact path="/createBizness">
                             <Form currentId={null} setcurrentId={setcurrentId} setFormActive={setFormActive} />
+                        </Route>
+                        <Route exact path="/auth">
+                            <Auth />
                         </Route>
                         <Route exact path="/:id">
                             <BiznessDetails biznesses={biznesses}/>

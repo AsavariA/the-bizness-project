@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Link, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, Button, InputBase, Drawer, List, Link, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import HelpIcon from '@material-ui/icons/Help';
@@ -7,14 +7,17 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import WorkIcon from '@material-ui/icons/Work';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import HomeIcon from '@material-ui/icons/Home';
 import ReactRoundedImage from "react-rounded-image";
-import Elephant from "../../assets/elephant.jpg";
+import Userimage from "../../assets/userimage.jpg";
+import Noimage from "../../assets/noimage.jpg";
 import useStyles from './styles';
 
 const NavBar = ({ setFormActive }) => {
     const classes = useStyles();
     const [drawerState, setDrawerState] = React.useState({ left: false });
+    const user = null;
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -32,7 +35,7 @@ const NavBar = ({ setFormActive }) => {
         >
             <div style={{ margin: '2rem' }}>
                 <ReactRoundedImage
-                    image={Elephant}
+                    image={user ? Userimage : Noimage}
                     roundedColor="#321124"
                     imageWidth="150"
                     imageHeight="150"
@@ -41,10 +44,10 @@ const NavBar = ({ setFormActive }) => {
                 />
             </div>
             <Typography className={classes.drawername} variant="h6" noWrap>
-                Guest
+                {user ? 'User Name' : 'Guest'}
             </Typography>
             <Typography className={classes.drawername} variant="body1" noWrap>
-                guest@email.com
+                {user ? 'user@email.com' : 'guest@email.com'}
             </Typography>
             <br></br>
             <List>
@@ -68,6 +71,19 @@ const NavBar = ({ setFormActive }) => {
                     <ListItemIcon><FavoriteIcon /></ListItemIcon>
                     <ListItemText primary='Favourites' />
                 </ListItem>
+                {user ? (
+                    <ListItem button key='Logout'>
+                        <ListItemIcon><VpnKeyIcon /></ListItemIcon>
+                        <ListItemText primary='Logout' />
+                    </ListItem>
+                ) : (
+                    <Link href='/auth'>
+                        <ListItem button key='Sign In'>
+                            <ListItemIcon><VpnKeyIcon /></ListItemIcon>
+                            <ListItemText primary='Sign In' />
+                        </ListItem>
+                    </Link>
+                )}
             </List>
             <Divider />
             <List>
@@ -96,9 +112,11 @@ const NavBar = ({ setFormActive }) => {
                         <MenuIcon />
                     </IconButton>
                     <Drawer anchor='left' open={drawerState['left']} classes={{ paper: classes.paper }} onClose={toggleDrawer(false)}>{list('left')}</Drawer>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        The Bizness Project
-                    </Typography>
+                    <Link href='/'>
+                        <Typography className={classes.title} variant="h6" noWrap>
+                            The Bizness Project
+                        </Typography>
+                    </Link>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -113,6 +131,21 @@ const NavBar = ({ setFormActive }) => {
                         />
                     </div>
                     <div className={classes.grow} />
+                    <div>
+                        {
+                            user ? (
+                                <Button className={classes.button} variant="contained" color="secondary">
+                                    Logout
+                                </Button>
+                            ) : (
+                                <Link href='/auth'>
+                                    <Button className={classes.button} variant="contained" color="secondary">
+                                        Sign In
+                                    </Button>
+                                </Link>
+                            )
+                        }
+                    </div>
                 </Toolbar>
             </AppBar>
         </div>
