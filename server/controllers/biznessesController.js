@@ -12,7 +12,7 @@ export const getAllBiznesses = async (req, res) => {
 
 export const createBizness = async (req, res) => {
     const bizness = req.body
-    const newBizness = new BiznessModel(bizness)
+    const newBizness = new BiznessModel({...bizness, owner: req.userId})
     try {
         await newBizness.save();
         res.status(201).json(newBizness);

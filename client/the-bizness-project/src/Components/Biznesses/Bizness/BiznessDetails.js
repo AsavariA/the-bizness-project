@@ -89,7 +89,7 @@ const BiznessDetails = ({ biznesses }) => {
                         }
                     </div>
                     <div style={bottomStyles}>
-                        <h4>By {bizness.owner} at {bizness.contact}</h4>
+                        <h4>By {bizness.ownerName} at {bizness.contact}</h4>
                     </div>
                 </div>
             }

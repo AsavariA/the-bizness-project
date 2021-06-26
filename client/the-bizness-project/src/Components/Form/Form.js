@@ -14,6 +14,7 @@ const Form = ({ currentId, setcurrentId, setFormActive }) => {
     const dispatch = useDispatch();
     const bizness = useSelector((state) => currentId ? state.biznessesReducers.find((biz) => biz._id === currentId) : null);
     const isResponsive = useMediaQuery({ query: '(max-width: 900px)' })
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         if (bizness) {
@@ -31,7 +32,6 @@ const Form = ({ currentId, setcurrentId, setFormActive }) => {
     const [obscureSubmitText, setObscureSubmitText] = useState(false)
 
     const [biznessData, setBiznessData] = useState({
-        owner: '',
         contact: '',
         name: '',
         description: '',
@@ -63,7 +63,6 @@ const Form = ({ currentId, setcurrentId, setFormActive }) => {
         console.log(productData);
         setBiznessData({ ...biznessData, products: productData });
         if (biznessData.tags.split(',').length <= 5 &&
-            biznessData.owner !== '' &&
             biznessData.contact !== '' &&
             biznessData.name !== '' &&
             biznessData.description !== '' &&
@@ -75,12 +74,12 @@ const Form = ({ currentId, setcurrentId, setFormActive }) => {
                 setObscureAddText(true);
             } else {
                 if (currentId) {
-                    dispatch(updateBizness(currentId, biznessData))
+                    dispatch(updateBizness(currentId, { ...biznessData, ownerName: user?.result?.name }))
                     toast.success('Business Updated!');
                     setObscureSubmitText(true);
                     setFormActive(false);
                 } else {
-                    dispatch(createBizness(biznessData))
+                    dispatch(createBizness({ ...biznessData, ownerName: user?.result?.name }))
                     toast.success('Business Created!');
                     setObscureSubmitText(true);
                     setFormActive(false);
@@ -94,7 +93,6 @@ const Form = ({ currentId, setcurrentId, setFormActive }) => {
         console.log('cleared');
         setcurrentId(null);
         setBiznessData({
-            owner: '',
             contact: '',
             name: '',
             description: '',
@@ -111,6 +109,18 @@ const Form = ({ currentId, setcurrentId, setFormActive }) => {
         padding: '0.5rem',
         marginRight: isResponsive ? '0' : '1rem',
         marginBottom: isResponsive ? '0.5rem' : '0'
+    }
+
+    if (!user?.result?.name) {
+        return (
+            <div style={{ margin: '15rem auto', width: isResponsive ? '90vw' : '50vw' }}>
+                <Paper className={classes.paper}>
+                    <Typography variant="h6" align="center">
+                        Please Sign In to create and edit your business!
+                    </Typography>
+                </Paper>
+            </div>
+        );
     }
 
     return (
@@ -137,7 +147,6 @@ const Form = ({ currentId, setcurrentId, setFormActive }) => {
                             />
                         );
                     }) : null}
-                    <TextField name="owner" variant="outlined" fullWidth label="Owner" size="small" value={biznessData.owner} required onChange={(e) => setBiznessData({ ...biznessData, owner: e.target.value })}></TextField>
                     <TextField name="contact" variant="outlined" fullWidth label="Contact" size="small" value={biznessData.contact} required onChange={(e) => setBiznessData({ ...biznessData, contact: e.target.value })}></TextField>
                     <div className={classes.fileInput}><FileBase type="file" required multiple={false} onDone={({ base64 }) => setBiznessData({ ...biznessData, logo: base64 })}></FileBase></div>
 

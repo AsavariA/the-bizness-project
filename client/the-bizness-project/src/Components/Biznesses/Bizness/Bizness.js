@@ -5,13 +5,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
 import useStyles from './styles';
-import {useDispatch} from 'react-redux';
-import {deleteBizness} from '../../../actions/biznessesAction'
+import { useDispatch } from 'react-redux';
+import { deleteBizness } from '../../../actions/biznessesAction'
 
 const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [like, setLike] = useState(false);
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     return (
         <Card className={classes.root}>
@@ -29,7 +30,7 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                     </Tooltip>
                 }
                 title={bizness.name}
-                subheader={`by ${bizness.owner}`}
+                subheader={`by ${bizness.ownerName}`}
             />
             <CardMedia
                 className={classes.media}
@@ -53,21 +54,25 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                 }) : null}
             </CardContent>
             <CardActions disableSpacing>
-                <Tooltip title="Edit Business">
-                    <IconButton aria-label="edit" onClick={() => { setcurrentId(bizness._id); setFormActive(true) }}>
-                        <EditIcon />
-                    </IconButton>
-                </Tooltip>
                 <Tooltip title="Add to Favourites">
                     <IconButton aria-label="add to favorites" onClick={() => { setLike(!like) }} >
                         <FavoriteIcon style={like ? { color: 'red' } : { color: 'grey' }} />
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete" onClick={() => dispatch(deleteBizness(bizness._id))}>
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
+                {(user?.result?.googleId === bizness?.owner || user?.result?._id === bizness?.owner) && (
+                    <Tooltip title="Edit Business">
+                        <IconButton aria-label="edit" onClick={() => { setcurrentId(bizness._id); setFormActive(true) }}>
+                            <EditIcon />
+                        </IconButton>
+                    </Tooltip>
+                )}
+                {(user?.result?.googleId === bizness?.owner || user?.result?._id === bizness?.owner) && (
+                    <Tooltip title="Delete">
+                        <IconButton aria-label="delete" onClick={() => dispatch(deleteBizness(bizness._id))}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+                )}
             </CardActions>
         </Card>
     )

@@ -8,6 +8,7 @@ const productSchema = mongoose.Schema({
 
 const biznessSchema = mongoose.Schema({
     owner: String,
+    ownerName: String,
     contact: String,
     name: String,
     description: String,
