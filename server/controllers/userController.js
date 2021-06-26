@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-import UserModel from '../models/userModel'
+import UserModel from '../models/userModel.js'
 
 export const signin = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const existingUser = UserModel.findOne({ email });
+        const existingUser = await UserModel.findOne({ email });
         if (!existingUser) return res.status(404).json({ message: 'User not found' });
 
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
@@ -22,9 +22,9 @@ export const signin = async (req, res) => {
 }
 
 export const signup = async (req, res) => {
-    const { email, password, confirmPassword, firstName, lastName } = req.body;
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
     try {
-        const existingUser = UserModel.findOne({ email });
+        const existingUser = await UserModel.findOne({ email: email });
         if (existingUser) return res.status(400).json({ message: 'User already exists!' });
 
         if (password !== confirmPassword) return res.status(400).json({ message: 'Passswords dont match!' });
