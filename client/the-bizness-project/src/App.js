@@ -41,13 +41,13 @@ const App = () => {
     return (
         <Router>
             <MuiThemeProvider theme={theme}>
-                <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'aliceblue'}}>
+                <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'aliceblue' }}>
                     <NavBar setFormActive={setFormActive} />
                     <Switch>
                         <Route exact path="/">
                             {
                                 formActive ? <Form currentId={currentId} setcurrentId={setcurrentId} setFormActive={setFormActive} />
-                                    : <Biznesses setcurrentId={setcurrentId} setFormActive={setFormActive} biznesses={biznesses}/>
+                                    : <Biznesses setcurrentId={setcurrentId} setFormActive={setFormActive} biznesses={biznesses} />
                             }
                         </Route>
                         <Route exact path="/createBizness">
@@ -57,10 +57,13 @@ const App = () => {
                             <Auth />
                         </Route>
                         <Route exact path="/profile">
-                            <Profile />
+                            {
+                                formActive ? <Form currentId={currentId} setcurrentId={setcurrentId} setFormActive={setFormActive} />
+                                    : <Profile biznesses={biznesses} setcurrentId={setcurrentId} setFormActive={setFormActive} />
+                            }
                         </Route>
                         <Route exact path="/:id">
-                            <BiznessDetails biznesses={biznesses}/>
+                            <BiznessDetails biznesses={biznesses} />
                         </Route>
                     </Switch>
                     <Footer />

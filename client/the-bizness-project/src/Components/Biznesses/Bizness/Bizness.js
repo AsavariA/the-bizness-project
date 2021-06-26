@@ -54,6 +54,13 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                 }) : null}
             </CardContent>
             <CardActions disableSpacing>
+                <Tooltip title="View More">
+                    <Link href={`/${bizness._id}`}>
+                        <IconButton aria-label="settings">
+                            <MoreVertIcon />
+                        </IconButton>
+                    </Link>
+                </Tooltip>
                 <Tooltip title="Add to Favourites">
                     <IconButton aria-label="add to favorites" onClick={() => { setLike(!like) }} >
                         <FavoriteIcon style={like ? { color: 'red' } : { color: 'grey' }} />
