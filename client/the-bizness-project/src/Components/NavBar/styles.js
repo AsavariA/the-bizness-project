@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
         flexGrow: 2,
       },
       title: {
-        display: 'none',
+        display: 'block',
         color: 'white',
         [theme.breakpoints.up('sm')]: {
           display: 'block',

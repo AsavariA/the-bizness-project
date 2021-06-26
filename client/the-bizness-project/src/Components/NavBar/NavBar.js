@@ -1,7 +1,6 @@
-import React,{ useState, useEffect} from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Button, InputBase, Drawer, List, Link, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { AppBar, Toolbar, IconButton, Typography, Button, Drawer, List, Link, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import HelpIcon from '@material-ui/icons/Help';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -13,8 +12,9 @@ import ReactRoundedImage from "react-rounded-image";
 import Userimage from "../../assets/userimage.jpg";
 import Noimage from "../../assets/noimage.jpg";
 import useStyles from './styles';
-import {useDispatch} from 'react-redux';
-import {useHistory, useLocation} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import decode from 'jwt-decode'
 
 const NavBar = ({ setFormActive }) => {
     const classes = useStyles();
@@ -24,17 +24,21 @@ const NavBar = ({ setFormActive }) => {
     const [drawerState, setDrawerState] = React.useState({ left: false });
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
-    useEffect(() => {
-        const token = user?.token
-        setUser(JSON.parse(localStorage.getItem('profile')))
-        // eslint-disable-next-line
-    }, [location])
-
     const logout = () => {
-        dispatch({type: 'LOGOUT'})
+        dispatch({ type: 'LOGOUT' })
         history.push('/')
         setUser(null)
     }
+
+    useEffect(() => {
+        const token = user?.token
+        setUser(JSON.parse(localStorage.getItem('profile')))
+        if (token) {
+            const decodedToken = decode(token)
+            if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+        }
+        // eslint-disable-next-line
+    }, [location])
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -74,10 +78,12 @@ const NavBar = ({ setFormActive }) => {
                         <ListItemText primary='Home' />
                     </ListItem>
                 </Link>
-                <ListItem button key='Profile'>
-                    <ListItemIcon><AccountCircleIcon /></ListItemIcon>
-                    <ListItemText primary='Profile' />
-                </ListItem>
+                <Link href='/profile'>
+                    <ListItem button key='Profile'>
+                        <ListItemIcon><AccountCircleIcon /></ListItemIcon>
+                        <ListItemText primary='Profile' />
+                    </ListItem>
+                </Link>
                 <Link href='/createBizness'>
                     <ListItem button key='Create Biz' onClick={() => setFormActive(true)}>
                         <ListItemIcon><WorkIcon /></ListItemIcon>
@@ -134,19 +140,6 @@ const NavBar = ({ setFormActive }) => {
                             The Bizness Project
                         </Typography>
                     </Link>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
                     <div className={classes.grow} />
                     <div>
                         {
