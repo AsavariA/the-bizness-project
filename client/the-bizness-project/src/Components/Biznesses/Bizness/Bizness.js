@@ -26,7 +26,8 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
         setOpen(false);
     };
 
-    const url = `/${bizness._id}`
+    const currentUrl = window.location.href.includes('profile') ? window.location.href.replace(/profile/g, "") : window.location.href
+    const url = `${currentUrl}${bizness._id}` 
     const text = `Hey there! Check out this awesome business! \n\n *${bizness.name} by ${bizness.ownerName}* : \n\n`
 
     return (
