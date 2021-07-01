@@ -8,7 +8,7 @@ const Biznesses = ({setcurrentId, setFormActive, biznesses}) => {
     return (
         <div className='buzinesses' style={{ padding: '1rem 2rem', marginBottom: '2rem' }}>
             <div style={{ textAlign: 'center', margin: '1rem 0' }}>
-                <Typography variant='h4'>Biznesses</Typography>
+                <Typography variant='h4'>All Businesses</Typography>
             </div>
             {!biznesses.length ?
                 <div style={{height:'80vh', width:'100%', display: 'flex', alignItems: 'center', justifyContent:'center'}}>
