@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
-import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography, Tooltip, Link } from '@material-ui/core';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import React from 'react';
+import { Card, CardActions, CardHeader, CardContent, CardMedia, IconButton, Chip, Avatar, Typography, Tooltip, Link, Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import NotesIcon from '@material-ui/icons/Notes';
+import ShareIcon from '@material-ui/icons/Share';
 import EditIcon from '@material-ui/icons/Edit';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { deleteBizness } from '../../../actions/biznessesAction'
+import { WhatsappIcon, WhatsappShareButton, FacebookShareButton, FacebookIcon, LinkedinShareButton, LinkedinIcon, TelegramShareButton, TelegramIcon } from "react-share";
 
 const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [like, setLike] = useState(false);
     const user = JSON.parse(localStorage.getItem('profile'));
+
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const url = `/${bizness._id}`
+    const text = `Hey there! Check out this awesome business! \n\n *${bizness.name} by ${bizness.ownerName}* : \n\n`
 
     return (
         <Card className={classes.root}>
+            <ToastContainer />
             <CardHeader
                 avatar={
                     <Avatar alt="Business Logo" src={bizness.logo} />
@@ -24,7 +40,7 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                     <Tooltip title="View More">
                         <Link href={`/${bizness._id}`}>
                             <IconButton aria-label="settings">
-                                <MoreVertIcon />
+                                <NotesIcon />
                             </IconButton>
                         </Link>
                     </Tooltip>
@@ -57,14 +73,9 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                 <Tooltip title="View More">
                     <Link href={`/${bizness._id}`}>
                         <IconButton aria-label="settings">
-                            <MoreVertIcon />
+                            <NotesIcon />
                         </IconButton>
                     </Link>
-                </Tooltip>
-                <Tooltip title="Add to Favourites">
-                    <IconButton aria-label="add to favorites" onClick={() => { setLike(!like) }} >
-                        <FavoriteIcon style={like ? { color: 'red' } : { color: 'grey' }} />
-                    </IconButton>
                 </Tooltip>
                 {(user?.result?.googleId === bizness?.owner || user?.result?._id === bizness?.owner) && (
                     <Tooltip title="Edit Business">
@@ -80,6 +91,51 @@ const Bizness = ({ bizness, setcurrentId, setFormActive }) => {
                         </IconButton>
                     </Tooltip>
                 )}
+                <Tooltip title="Share">
+                    <IconButton aria-label="share" onClick={handleClickOpen}>
+                        <ShareIcon />
+                    </IconButton>
+                </Tooltip>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">Share via -</DialogTitle>
+                    <DialogContent>
+                        <div style={{ display: 'flex' }}>
+                            <div style={{ margin: '0 0.5rem' }}>
+                                <WhatsappShareButton url={url} title={text}>
+                                    <WhatsappIcon size={32} />
+                                </WhatsappShareButton>
+                            </div>
+                            <div style={{ margin: '0 0.5rem' }}>
+                                <FacebookShareButton url={url} quote={text}>
+                                    <FacebookIcon size={32} />
+                                </FacebookShareButton>
+                            </div>
+                            <div style={{ margin: '0 0.5rem' }}>
+                                <LinkedinShareButton url={url} title={text}>
+                                    <LinkedinIcon size={32} />
+                                </LinkedinShareButton>
+                            </div>
+                            <div style={{ margin: '0 0.5rem' }}>
+                                <TelegramShareButton url={url} title={text}>
+                                    <TelegramIcon size={32} />
+                                </TelegramShareButton>
+                            </div>
+                            <div style={{ margin: '0 0.5rem' }}>
+                                <Tooltip title="Copy Link to clipboard">
+                                    <CopyToClipboard text={url}
+                                        onCopy={() => toast.success('Url copied to clipboard!')}>
+                                        <FileCopyIcon />
+                                    </CopyToClipboard>
+                                </Tooltip>
+                            </div>
+                        </div>
+                    </DialogContent>
+                </Dialog>
             </CardActions>
         </Card>
     )

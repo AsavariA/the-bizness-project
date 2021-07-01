@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import BiznessDetails from './Components/Biznesses/Bizness/BiznessDetails';
 import Auth from './Components/Auth/Auth'
 import Profile from './Components/Profile/Profile'
+import About from './Components/About'
 
 const font = "'Nunito', sans-serif";
 const theme = createMuiTheme({
@@ -61,6 +62,9 @@ const App = () => {
                                 formActive ? <Form currentId={currentId} setcurrentId={setcurrentId} setFormActive={setFormActive} />
                                     : <Profile biznesses={biznesses} setcurrentId={setcurrentId} setFormActive={setFormActive} />
                             }
+                        </Route>
+                        <Route exact path="/about">
+                            <About />
                         </Route>
                         <Route exact path="/:id">
                             <BiznessDetails biznesses={biznesses} />

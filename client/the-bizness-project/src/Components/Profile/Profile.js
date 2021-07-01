@@ -31,7 +31,7 @@ const Profile = ({ biznesses, setcurrentId, setFormActive }) => {
                         height={100}
                         width={100}
                     />
-                    <h2>Loading you businesses. Please go back if dont own a business.</h2>
+                    <h2>Loading your businesses. Please go back if dont own a business.</h2>
                 </div>}
             </div>
         </div>

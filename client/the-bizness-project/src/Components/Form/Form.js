@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Typography, Chip, Avatar, Paper } from '@material-ui/core';
+import { TextField, Button, Typography, Chip, Avatar, Paper, Link } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import useStyles from './styles';
 import { ToastContainer, toast } from 'react-toastify';
@@ -190,7 +190,7 @@ const Form = ({ currentId, setcurrentId, setFormActive }) => {
                     <Button className={classes.buttonSubmit} color="primary" variant="contained" size="large" type="submit" fullWidth disabled={obscureSubmitText}>{submitText}</Button>
                     <div style={{ display: 'flex', width: '100%' }}>
                         <Button color="secondary" variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
-                        <Button color="secondary" variant="contained" size="small" fullWidth onClick={() => setFormActive(false)}>Go Back!</Button>
+                        <Button color="secondary" variant="contained" size="small" fullWidth><Link href="/">Go Back!</Link></Button>
                     </div>
                 </form>
             </Paper>

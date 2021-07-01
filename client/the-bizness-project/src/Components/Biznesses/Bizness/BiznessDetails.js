@@ -35,7 +35,7 @@ const BiznessDetails = ({ biznesses }) => {
     const productsStyles = {
         margin: 'auto',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
         gridGap: '2rem',
         padding: isResponsive ? '3rem 1rem' : '3rem 2rem',
         alignItems: 'center',

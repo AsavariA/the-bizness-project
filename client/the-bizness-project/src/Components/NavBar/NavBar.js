@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button, Drawer, List, Link, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import HelpIcon from '@material-ui/icons/Help';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import WorkIcon from '@material-ui/icons/Work';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import HomeIcon from '@material-ui/icons/Home';
 import ReactRoundedImage from "react-rounded-image";
@@ -92,10 +90,6 @@ const NavBar = ({ setFormActive }) => {
                         <ListItemText primary='Create Biz' />
                     </ListItem>
                 </Link>
-                <ListItem button key='Favourites'>
-                    <ListItemIcon><FavoriteIcon /></ListItemIcon>
-                    <ListItemText primary='Favourites' />
-                </ListItem>
                 {user ? (
                     <ListItem button key='Logout' onClick={logout}>
                         <ListItemIcon><VpnKeyIcon /></ListItemIcon>
@@ -112,14 +106,12 @@ const NavBar = ({ setFormActive }) => {
             </List>
             <Divider />
             <List>
-                <ListItem button key='FAQs'>
-                    <ListItemIcon><HelpIcon /></ListItemIcon>
-                    <ListItemText primary='FAQs' />
-                </ListItem>
-                <ListItem button key='About Us'>
-                    <ListItemIcon><SupervisorAccountIcon /></ListItemIcon>
-                    <ListItemText primary='About Us' />
-                </ListItem>
+                <Link href='/about'>
+                    <ListItem button key='About'>
+                        <ListItemIcon><SupervisorAccountIcon /></ListItemIcon>
+                        <ListItemText primary='About' />
+                    </ListItem>
+                </Link>
             </List>
         </div>
     );
