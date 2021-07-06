@@ -1,10 +1,7 @@
  # The Bizness Project
----
 
 ## Overview
 One place for all your businesses. The intention of this project was to create a platform for hosting your own business. People can browse through the catalog of the services and products you provide and can contact you if they are interested. Similarly, you can check out other businesses too! Feel free to explore all the features and give suggestions!
-
----
 
 ## Features
 1.  Browsing through all the various businesses available in the market.
@@ -14,9 +11,6 @@ One place for all your businesses. The intention of this project was to create a
 5. Google Authentification
 6. Mobile Responsive
 
----
-
-
 ## Tech Stack
 | Application | Technologies |
 | :------------ |-------------:|
@@ -25,12 +19,9 @@ One place for all your businesses. The intention of this project was to create a
 | Database | MongoDB |
 | Authentification | Google, MongoDB |
 
----
 
 ## Deployment
 https://the-bizness-project.netlify.app/
-
----
 
 ## Demo
 ![Image1](https://github.com/AsavariA/the-bizness-project/blob/master/demos/image.PNG)
