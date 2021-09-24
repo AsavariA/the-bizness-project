@@ -6,6 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import WorkIcon from '@material-ui/icons/Work';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import HomeIcon from '@material-ui/icons/Home';
+import StarIcon from '@material-ui/icons/Star';
 import ReactRoundedImage from "react-rounded-image";
 import Userimage from "../../assets/userimage.jpg";
 import Noimage from "../../assets/noimage.jpg";
@@ -110,6 +111,12 @@ const NavBar = ({ setFormActive }) => {
                     <ListItem button key='About'>
                         <ListItemIcon><SupervisorAccountIcon /></ListItemIcon>
                         <ListItemText primary='About' />
+                    </ListItem>
+                </Link>
+                <Link href='https://github.com/AsavariA/the-bizness-project'>
+                    <ListItem button key='Github'>
+                        <ListItemIcon><StarIcon /></ListItemIcon>
+                        <ListItemText primary='Github' />
                     </ListItem>
                 </Link>
             </List>
